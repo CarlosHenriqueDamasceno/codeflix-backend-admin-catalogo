@@ -29,7 +29,7 @@ public class DefaultUpdateCategoryUseCase extends UpdateCategoryUseCase {
                 .orElseThrow(notFound(id));
         final var notification = Notification.create();
         aCategory
-                .update(anCommand.name(), anCommand.description(), aCategory.isActive())
+                .update(anCommand.name(), anCommand.description(), anCommand.isActive())
                 .validate(notification);
         return notification.hasErrors() ? Left(notification) : update(aCategory);
     }
