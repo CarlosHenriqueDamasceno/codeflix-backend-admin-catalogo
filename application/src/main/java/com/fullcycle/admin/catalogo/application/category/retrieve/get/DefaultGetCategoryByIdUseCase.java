@@ -1,9 +1,9 @@
 package com.fullcycle.admin.catalogo.application.category.retrieve.get;
 
+import com.fullcycle.admin.catalogo.domain.category.Category;
 import com.fullcycle.admin.catalogo.domain.category.CategoryGateway;
 import com.fullcycle.admin.catalogo.domain.category.CategoryID;
-import com.fullcycle.admin.catalogo.domain.exceptions.DomainException;
-import com.fullcycle.admin.catalogo.domain.validation.Error;
+import com.fullcycle.admin.catalogo.domain.exceptions.NotFoundException;
 
 import java.util.Objects;
 import java.util.function.Supplier;
@@ -23,7 +23,7 @@ public class DefaultGetCategoryByIdUseCase extends GetCategoryByIdUseCase {
                 .orElseThrow(notFound(categoryId));
     }
 
-    private static Supplier<DomainException> notFound(final CategoryID id) {
-        return () -> DomainException.with(new Error("Category with ID %s not found".formatted(id.getValue())));
+    private static Supplier<NotFoundException> notFound(final CategoryID id) {
+        return () -> NotFoundException.with(Category.class, id);
     }
 }
