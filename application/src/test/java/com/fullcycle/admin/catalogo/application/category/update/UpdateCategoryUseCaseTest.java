@@ -3,7 +3,7 @@ package com.fullcycle.admin.catalogo.application.category.update;
 import com.fullcycle.admin.catalogo.domain.category.Category;
 import com.fullcycle.admin.catalogo.domain.category.CategoryGateway;
 import com.fullcycle.admin.catalogo.domain.category.CategoryID;
-import com.fullcycle.admin.catalogo.domain.exceptions.DomainException;
+import com.fullcycle.admin.catalogo.domain.exceptions.NotFoundException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -177,7 +177,7 @@ public class UpdateCategoryUseCaseTest {
         final var expectedName = "Filmes";
         final var expectedDescription = "A categoria mais assistida";
         final var expectedIsActive = false;
-        final var expectedErrorMessage = "Category with ID %s not found".formatted(expectedId);
+        final var expectedErrorMessage = "Category with ID %s was not found".formatted(expectedId);
         final var expectedErrorCount = 1;
         final var aCommand = UpdateCategoryCommand.with(
                 expectedId,
@@ -188,11 +188,10 @@ public class UpdateCategoryUseCaseTest {
 
         when(categoryGateway.findById(eq(CategoryID.from(expectedId)))).thenReturn(Optional.empty());
 
-        final var actualException = Assertions.assertThrows(DomainException.class, () -> useCase.execute(aCommand));
+        final var actualException = Assertions.assertThrows(NotFoundException.class, () -> useCase.execute(aCommand));
 
         Assertions.assertNotNull(actualException);
-        Assertions.assertEquals(expectedErrorCount, actualException.getErrors().size());
-        Assertions.assertEquals(expectedErrorMessage, actualException.getErrors().get(0).message());
+        Assertions.assertEquals(expectedErrorMessage, actualException.getMessage());
 
         Mockito.verify(categoryGateway, times(1)).findById(eq(CategoryID.from(expectedId)));
         Mockito.verify(categoryGateway, times(0)).update(any());
