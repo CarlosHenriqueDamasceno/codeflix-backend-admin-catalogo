@@ -234,7 +234,7 @@ public class CategoryApiTest {
         when(updateCategoryUseCase.execute(any())).thenReturn(API.Right(UpdateCategoryOutput.from("123")));
 
 
-        final var input = new UpdateCategoryRequest(expectedId, expectedName, expectedDescription, expectedIsActive);
+        final var input = new UpdateCategoryRequest(expectedName, expectedDescription, expectedIsActive);
 
         final var request = MockMvcRequestBuilders.put("/categories/{id}", expectedId)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -269,7 +269,7 @@ public class CategoryApiTest {
         );
 
 
-        final var input = new UpdateCategoryRequest(expectedId, expectedName, expectedDescription, expectedIsActive);
+        final var input = new UpdateCategoryRequest(expectedName, expectedDescription, expectedIsActive);
 
         final var request = MockMvcRequestBuilders.put("/categories/{id}", expectedId)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -306,7 +306,7 @@ public class CategoryApiTest {
         );
 
 
-        final var input = new UpdateCategoryRequest(expectedId, expectedName, expectedDescription, expectedIsActive);
+        final var input = new UpdateCategoryRequest(expectedName, expectedDescription, expectedIsActive);
 
         final var request = MockMvcRequestBuilders.put("/categories/{id}", expectedId)
                 .contentType(MediaType.APPLICATION_JSON)

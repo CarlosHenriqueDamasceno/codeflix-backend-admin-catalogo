@@ -79,7 +79,7 @@ public class CategoryController implements CategoryApi {
     @Override
     public ResponseEntity<?> updateById(final String id, final UpdateCategoryRequest input) {
         final var aCommand = UpdateCategoryCommand.with(
-                input.id(),
+                id,
                 input.name(),
                 input.description(),
                 input.active() != null ? input.active() : true
