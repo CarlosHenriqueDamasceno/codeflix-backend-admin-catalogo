@@ -55,4 +55,8 @@ public class Notification implements ValidationHandler {
     public List<Error> getErrors() {
         return this.errors;
     }
+
+    public boolean hasError() {
+        return !this.errors.isEmpty();
+    }
 }
